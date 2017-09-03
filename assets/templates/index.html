@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>EHRDE - Dashboard</title>
+    <meta name="description" content="..." />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" />
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/js/jqwidgets/styles/jqx.base.css" type="text/css" />
+    <link rel="stylesheet" href="assets/js/jqwidgets/styles/jqx.bootstrap.css">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.min.css" rel="stylesheet" type="text/css" />
+
+    <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+
+<body>
+    <nav class="navbar navbar-fixed-top navbar-dark bg-primary">
+        <button class="navbar-toggler hidden-sm-up pull-right" type="button" data-toggle="collapse" data-target="#collapsingNavbar">
+            ☰
+        </button>
+        <a class="navbar-brand" href="#">EHRDE</a>
+        <div class="collapse navbar-toggleable-xs" id="collapsingNavbar">
+            <ul class="nav navbar-nav pull-right">
+                <!--li class="nav-item active">
+                    <a class="nav-link" href="#top">Home <span class="sr-only">Home</span></a>
+                </li-->
+                <li class="nav-item">
+                    <a class="nav-link" href="" data-toggle="modal" data-target="#myModal">About</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container-fluid" id="main">
+        <div class="row row-offcanvas row-offcanvas-left">
+            <!--div class="col-md-2 col-lg-2 sidebar-offcanvas" id="sidebar" role="navigation">
+                <ul class="nav nav-pills nav-stacked">
+                    <li class="nav-item"><a class="nav-link" href="#top">Top</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#data">Data</a></li>
+                </ul>
+            </div-->
+            <!--/col-->
+
+
+            <div class="col-md-12 col-lg-12 main">
+                <!-- MAIN INDEX COL -->
+
+                <!--toggle sidebar button-->
+                <p class="hidden-md-up">
+                    <button type="button" class="btn btn-primary-outline btn-sm" data-toggle="offcanvas"><i class="fa fa-chevron-left"></i> Menu</button>
+                </p>
+
+                <a id="top"></a>
+                <!--h1 class="display-3 hidden-xs-down">
+                  EHRDE's Dashboard
+                </h1--!>
+
+                <div class="row">
+                    <!-- MAIN CONTENT ROW -->
+                    <div class="col-md-3 col-lg-3">
+                        <!-- TREE/LIST -->
+                        <a id="templates-tree"></a>
+                        <!--hr-->
+                        <div id='jqxWidget-templates'></div>
+                        <!-- /tree -->
+                    </div>
+
+                    <div class="col-md-9 col-lg-9">
+                        <!--hr-->
+                        <!-- VISJS -->
+                        <div id="mynetwork"></div>
+                    </div>
+                </div>
+                <!-- /main content row-->
+
+            </div>
+            <!--/main index col-->
+
+        </div>
+
+
+    </div>
+    <!--/.container-->
+    <footer class="container-fluid">
+        <!--p class="text-right small">©2016 ...</p-->
+    </footer>
+
+
+    <!-- 'About' Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">About</h4>
+                </div>
+                <div class="modal-body">
+			EHRDE is part of HaMSTR, a project by <a href="https://plri.de/">PLRI</a>.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <!--button type="button" class="btn btn-primary-outline" data-dismiss="modal">OK</button-->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 'Node Details' Modal -->
+    <div class="modal fade" id="nodeModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Details</h4>
+                </div>
+                <div class="modal-body">
+			This is where details could be displayed. Example: <p>
+		    <div id="count"></a>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <!--button type="button" class="btn btn-primary-outline" data-dismiss="modal">OK</button-->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--scripts loaded here-->
+
+
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/tether/1.2.0/js/tether.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript" src="assets/js/jqwidgets/jqxcore.js"></script>
+    <script type="text/javascript" src="assets/js/jqwidgets/jqxdata.js"></script>
+    <script type="text/javascript" src="assets/js/jqwidgets/jqxbuttons.js"></script>
+    <script type="text/javascript" src="assets/js/jqwidgets/jqxscrollbar.js"></script>
+    <script type="text/javascript" src="assets/js/jqwidgets/jqxpanel.js"></script>
+    <script type="text/javascript" src="assets/js/jqwidgets/jqxtree.js"></script>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.min.js"></script>
+
+    <script src="assets/js/scripts.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            var data = {{.TreeJSON}} //test DisplayBody or Body         // prepare the data
+            var source = {
+                datatype: "json",
+                datafields: [{
+                    name: 'id'
+                }, {
+                    name: 'parentId'
+                }, {
+                    name: 'label'
+                }],
+                id: 'id',
+                localdata: data
+            };
+            // create data adapter.
+            var dataAdapter = new $.jqx.dataAdapter(source);
+            // perform Data Binding.
+            dataAdapter.dataBind();
+            // get the tree items. The first parameter is the item's id. The second parameter is the parent item's id. 
+	    // The 'items' parameter represents the sub items collection name. 
+	    // Each jqxTree item has a 'label' property, but in the JSON data, we have a 'text' field. 
+	    // The last paramete specifies the mapping between the 'text' and 'label' fields.
+            var records = dataAdapter.getRecordsHierarchy('id', 'parentId', 'items', [{
+                name: 'label',
+                map: 'label'
+            }]);
+            $('#jqxWidget-templates').jqxTree({
+                source: records
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            var color = 'gray';
+            var len = undefined;
+
+            // group 0 templates; group 1 archetypes; group 2 entries
+            var nodes = {{.NodesJSON}}
+
+            var edges = {{.EdgesJSON}}
+
+            // create a network
+            var container = document.getElementById('mynetwork');
+            var visData = {
+                nodes: nodes,
+                edges: edges
+            };
+            var options = {
+                height: '100%',
+                nodes: {
+                    shape: 'dot',
+                    size: 20,
+                    font: {
+                        size: 15,
+                        color: '#ffffff'
+                    },
+                    borderWidth: 2
+                },
+                edges: {
+                    width: 2,
+                    //type: 'cubicBezier',
+                    //forceDirection: 'vertical',
+                    //roundness: 0.4
+                },
+                physics: {
+                    //enabled: true
+		    enabled: false
+                },
+                layout: {
+                    hierarchical: {
+                        enabled: true,
+                        direction: "UD",
+                        //nodeSpacing: 300, //default: 100
+			//treeSpacing: 100, //default: 200
+			blockShifting: true,
+			edgeMinimization: true
+                    }
+                },
+                interaction: {
+                    dragNodes: true
+                }
+            };
+            network = new vis.Network(container, visData, options);
+
+
+	//function to read a json file from disk in ajax self-call
+	function readTextFile(file, callback) {
+	    	var rawFile = new XMLHttpRequest();
+		rawFile.overrideMimeType("application/json");
+		rawFile.open("GET", file, true);
+		rawFile.onreadystatechange = function() {
+	    		if (rawFile.readyState === 4 && rawFile.status == "200") {
+        			callback(rawFile.responseText);
+     			}
+    		}
+    		rawFile.send(null);
+	}
+
+	//reading dataMap.json per ajax so it's accessible by the following script
+	//especially needed by detail modal to display each node's count
+	//this could be one way of adding more details in the future too..
+	var datavaluesJson;
+	readTextFile("assets/js/datavalues.json", function(text){
+	    datavaluesJson = JSON.parse(text);
+	    console.log(datavaluesJson);
+	});
+
+	    //when init stabilization is done, stop physics (vis.js)
+            network.on("stabilized", function(params) {
+                console.log("stabilized!", params);
+		network.physics.setOptions({enabled:false});
+            });
+
+	    //hook that's calling the modal when double clicking a node
+	    network.on("doubleClick", function(params) {
+		console.log("double click!", params); //debug
+		if (params.nodes.length != 0) {
+			console.log("double click: later use id: ", params.nodes[0]); //debug
+			
+			//adding var to modals DOM
+			var modal = $('#nodeModal');
+			if (typeof datavaluesJson[params.nodes[0]] !== 'undefined') {
+
+				var count = datavaluesJson[params.nodes[0]].count;
+				modal.find('#count').text('This type of DATA_VALUE exists ' + count + ' times DWH-wide.');
+			} else {
+				modal.find('#count').text('(Please click on a DATA_VALUE node. Details for more nodes might be added in the future.)');
+			}
+			
+			//calling to show the modal
+			$('#nodeModal').modal({
+ 		    		keyboard: false	
+			});
+			
+		}
+	    });
+
+	    //when selecting node in visjs, select in jxqtree too
+	    network.on("click", function(params) {
+		console.log("selet @ visjs: ", params.nodes[0]);
+		//$('#jqxWidget-templates').jqxTree('selectItem', params.nodes[0]);
+	    });
+
+	    //when selecting node in jqxtree, select in visjs too
+	    $('#jqxWidget-templates').on('select', function (event) {
+                var args = event.args;
+                var item = $('#jqxWidget-templates').jqxTree('getItem', args.element);
+		//console.log("select @ jqxtree: ", item);
+		console.log("id: ", item["id"]);
+                network.selectNodes([item["id"]]);
+
+		network.focus(item["id"], []);
+            });
+
+        });
+    </script>
+
+</body>
+
+</html>

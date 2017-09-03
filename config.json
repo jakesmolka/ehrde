@@ -1,0 +1,5 @@
+{
+	"BaseUrl" : "https://$REST_URL/",
+	"User" : "$USER",
+	"Password" : "$PASS"
+}
